@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  portainer:
+    image: portainer/portainer
+    command: --no-auth
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/robin/docker/portainer/mount/:/data
+    restart: always
+    container_name: portainer
+    labels:
+          - "traefik.backend=portainer"
+          - "traefik.frontend.rule=Host:portainer.dev"
+          - "traefik.enable=true"
+          - "traefik.port=9000"
+          - "traefik.frontend.entryPoints=http"
+networks:
+  default:
+    external:
+      name: local
